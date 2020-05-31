@@ -23,3 +23,56 @@ ca_np <- read.csv(here("data", "ca_np.csv"))
 ``` {r read-xls(x)}
 ci_np <- read_excel(here("data", "ci_np.xlsx"))
 ```
+
+```{r ggplots}
+ggplot(data = ci_np, aes(x = year, y = visitors)) + geom_line()
+```
+
+```{r aes_var}
+gg_base <- ggplot(data = ci_np, aes(x = year, y = visitors))
+```
+
+```{r point}
+gg_base +
+  geom_point()
+```
+
+``` {r col}
+gg_base +
+  geom_col()
+```
+
+```{r area}
+gg_base +
+  geom_area()
+```
+
+```{r custom line}
+gg_base +
+  geom_line(
+    colour = "purple",
+    linetype = "dashed"
+  )
+```
+
+``` {r custom point}
+gg_base +
+  geom_point(colour = "purple",
+             pch = 17,
+             size = 4,
+             alpha = 0.5)
+```
+
+``` {r custom element point}
+gg_base +
+  geom_point(
+    aes(size = visitors,
+        colour = visitors),
+    alpha = 0.5
+  )
+```
+
+```{r custom element col}
+gg_base +
+  geom_col(aes(fill = visitors))
+```
