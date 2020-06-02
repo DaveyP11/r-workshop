@@ -76,3 +76,81 @@ gg_base +
 gg_base +
   geom_col(aes(fill = visitors))
 ```
+
+``` {r custom element point theme1}
+gg_base +
+  geom_point(
+    aes(size = visitors,
+        colour = visitors),
+    alpha = 0.5
+  ) +
+  theme_light()
+```
+
+``` {r custom element point theme2}
+gg_base +
+  geom_point(
+    aes(size = visitors,
+        colour = visitors),
+    alpha = 0.5
+  ) +
+  theme_minimal()
+```
+
+``` {r custom element point theme3}
+gg_base +
+  geom_point(
+    aes(size = visitors,
+        colour = visitors),
+    alpha = 0.5
+  ) +
+  theme_linedraw()
+```
+
+``` {r line dotted theme labels}
+gg_base +
+  geom_line(linetype = "dotted") +
+  theme_bw() +
+  labs(
+    x = "Year",
+    y = "Annual park visitors",
+    title = "Channel Islands NP Visitation",
+    subtitle = "(1963 - 2016)"
+  )
+```
+
+``` {r combine geoms (chart types)}
+gg_base +
+  geom_line(colour = "purple") +
+  geom_point(colour = "orange",
+             aes(size = year),
+             alpha = 0.5)
+```
+
+```{r col and line}
+gg_base +
+  geom_col(fill = "orange",
+           colour = "purple") +
+  geom_line(colour = "green")
+```
+
+```{r multi-series}
+ggplot(data = ca_np, aes(x = year, y = visitors, group = park_name, colour = park_name)) +
+  geom_line()
+```
+
+```{r ggplot stored}
+gg_np <- ggplot(data = ca_np, aes(x = year, y = visitors, group = park_name))
+```
+
+```{r facet (multiple chart by list value (region?))}
+gg_np +
+  geom_line(show.legend = FALSE) +
+  theme_light() +
+  labs(X = "year", y = "annual visitors") +
+  facet_wrap(~ park_name)
+```
+
+```{r export with ggsave}
+ggsave(here("figures", "np_graph.jpg"), dpi = 180, width = 8, height = 7)
+```
