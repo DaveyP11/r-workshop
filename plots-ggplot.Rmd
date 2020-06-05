@@ -145,12 +145,12 @@ gg_np <- ggplot(data = ca_np, aes(x = year, y = visitors, group = park_name))
 
 #```{r facet (multiple chart by list value (region?))}
 #gg_np +
- # geom_line(show.legend = FALSE) +
-  #theme_light() +
-  #labs(X = "year", y = "annual visitors") +
-  #facet_wrap(~ park_name)
+#  geom_line(show.legend = FALSE) +
+#  theme_light() +
+#  labs(X = "year", y = "annual visitors") +
+#  facet_wrap(~ park_name)
 #```
 
 #```{r export with ggsave}
-#ggsave(here("figures", "np_graph3.jpg"), dpi = 180, width = 8, height = 7)
+#ggsave(here("figures", "np_graph.jpg"), dpi = 180, width = 8, #height = 7)
 #```
