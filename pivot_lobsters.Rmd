@@ -76,3 +76,36 @@ siteyear_summary <- lobsters %>%
             mean_size_mm = mean(size_mm, na.rm = TRUE),
             sd_size_nm = sd(size_mm, na.rm = TRUE))
 ```
+
+There are `r nrow(lobsters)` total lobsters included in this report.
+
+```{r table formatting}
+siteyear_summary %>%
+  kable(format = "html", digits = 2, caption = "Lobsters by Site and Year")
+```
+```{r 6.4.6 activity median}
+site_year_summary2 <- lobsters %>%
+  group_by(site, year) %>%
+  summarise(count_by_year = n(),
+            median_size_mm = median(size_mm,na.rm = TRUE),
+            mean_size_mm = mean(size_mm, na.rm = TRUE),
+            sd_size_nm = sd(size_mm, na.rm = TRUE))
+```
+
+```{r 6.4.6 activity plot}
+ggplot(site_year_summary2, aes(x = year, y =median_size_mm, colour = site)) +
+  geom_line()
+```
+```{r ggsave}
+ggsave(here("figures", "lobsters-line.png"))
+```
+
+```{r 6.4.6 activity plot2}
+ggplot(site_year_summary2, aes(x=year, y = median_size_mm)) +
+  geom_col() +
+  facet_wrap(~site)
+```
+
+```{r ggsave2}
+ggsave(here("figures", "lobsters-facet.png"))
+```
