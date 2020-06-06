@@ -25,23 +25,54 @@ lobsters <- read_xlsx(here("data/lobsters.xlsx"), skip=4)
 ```{r skim summary}
 skimr::skim(lobsters)
 ```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r dplyr pivot equivilent}
+lobsters  %>%
+  group_by(year) %>%
+  summarize(count_by_year = n())
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r dplyr pivot no grp}
+lobsters %>%
+  summarise(count = n())
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r r dplyr pivot grp only}
+lobsters %>%
+  group_by(year)
+```
+
+```{r dplyr pivot 2 groups}
+lobsters %>%
+  group_by(site, year) %>%
+  summarise(count_by_year = n())
+```
+
+```{r dplyr pivot 2 groups multiple variables}
+lobsters %>%
+  group_by(site, year) %>%
+  summarise(count_by_siteyear = n(),
+            mean_size_mm = mean(size_mm))
+```
+
+```{r dplyr pivot 2 groups multiple variables exc NAs}
+lobsters %>%
+  group_by(site, year) %>%
+  summarise(count_by_year = n(),
+            mean_size_mm = mean(size_mm, na.rm = TRUE))
+```
+
+```{r dplyr pivot 2 groups multiple variables exc NAs2}
+lobsters %>%
+  group_by(site, year) %>%
+  summarise(count_by_year = n(),
+            mean_size_mm = mean(size_mm, na.rm = TRUE),
+            sd_size_nm = sd(size_mm, na.rm = TRUE))
+```
+
+```{r dplyr pivot 2 groups multiple variables exc NAs as variable}
+siteyear_summary <- lobsters %>%
+  group_by(site, year) %>%
+  summarise(count_by_year = n(),
+            mean_size_mm = mean(size_mm, na.rm = TRUE),
+            sd_size_nm = sd(size_mm, na.rm = TRUE))
+```
