@@ -18,7 +18,7 @@ library(kableExtra)
 
 ## read in data
 ```{r import xlsx}
-lobsters <- read_xlsx(here("data/lobsters.xlsx"), skip=4)
+lobsters <- read_xlsx(here("data/lobsters2.xlsx"), skip=4)
 ```
 
 # explore data
@@ -97,7 +97,7 @@ ggplot(site_year_summary2, aes(x = year, y =median_size_mm, colour = site)) +
   geom_line()
 ```
 ```{r ggsave}
-ggsave(here("figures", "lobsters-line.png"))
+ggsave(here("figures", "lobsters-line2.png"))
 ```
 
 ```{r 6.4.6 activity plot2}
@@ -107,5 +107,5 @@ ggplot(site_year_summary2, aes(x=year, y = median_size_mm)) +
 ```
 
 ```{r ggsave2}
-ggsave(here("figures", "lobsters-facet.png"))
+ggsave(here("figures", "lobsters-facet2.png"))
 ```
