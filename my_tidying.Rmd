@@ -1,0 +1,39 @@
+---
+title: "my_tidying"
+author: "Dave Parkin"
+date: "07/06/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+#install.packages("janitor")
+library(janitor)
+library(here)
+library(readxl)
+```
+
+```{r read in data}
+inverts <- read_excel(here("data", "inverts.xlsx"))
+```
+
+```{r longer pivot}
+inverts_long <- pivot_longer(data = inverts,
+                             cols = '2016':'2018',
+                             names_to = 'year',
+                             values_to = 'sp_count')
+```
+
+```{r explore class of new observation column}
+class(inverts_long$year)
+```
+
+```{r mutate (coerce) class character to numeric}
+inverts_long <- inverts_long %>%
+  mutate(year = as.numeric(year))
+```
+
+```{r explore class of coerced observation column}
+class(inverts_long$year)
+```
