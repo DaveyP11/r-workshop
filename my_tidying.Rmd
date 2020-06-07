@@ -37,3 +37,39 @@ inverts_long <- inverts_long %>%
 ```{r explore class of coerced observation column}
 class(inverts_long$year)
 ```
+
+```{r long to wide pivot}
+inverts_wide <- inverts_long %>%
+  pivot_wider(names_from = common_name,
+              values_from = sp_count)
+```
+
+```{r clean header names}
+inverts_wide<- inverts_wide %>%
+  clean_names("upper_camel")
+
+names(inverts_wide)
+```
+
+```{r concantenate}
+inverts_unite <- inverts_long %>%
+  unite(col = "site_year",
+              c(site,year),
+              sep = "_")
+```
+
+```{r concat activity}
+inverts_unite2 <- inverts_long %>%
+  unite(col = "mo_yr",
+              c(month,year),
+              sep = "hello!")
+```
+
+```{r concantenate3}
+inverts_triple_unite <- inverts_long %>%
+  unite(col = "year_site_name",
+              c(year,site,common_name),
+              sep = "-")
+
+head(inverts_triple_unite)
+```
