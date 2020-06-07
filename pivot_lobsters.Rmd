@@ -109,3 +109,19 @@ ggplot(site_year_summary2, aes(x=year, y = median_size_mm)) +
 ```{r ggsave2}
 ggsave(here("figures", "lobsters-facet2.png"))
 ```
+
+##Using count() instead nrow(). 
+
+There are `r count(lobsters)` total lobsters included in this summary.
+
+```{r mutate add column}
+lobsters_detailed <- lobsters %>%
+  mutate(size_m = size_mm / 1000,
+         millenia = 2000,
+         observer = "Allison Horst")
+```
+
+```{r select columns}
+lobsters_detailed %>%
+  select(date, site, size_m)
+```
