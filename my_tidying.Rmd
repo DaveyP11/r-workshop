@@ -73,3 +73,18 @@ inverts_triple_unite <- inverts_long %>%
 
 head(inverts_triple_unite)
 ```
+
+```{r split cells (seperate)}
+inverts_sep <- inverts_unite %>%
+  tidyr::separate(site_year, into = c("my_site", "my_year"))
+```
+
+```{r find and replace}
+ca_abbr <- inverts %>%
+  mutate(
+    common_name = 
+      str_replace(common_name,
+                  pattern = "california",
+                  replacement = "CA")
+  )
+```
