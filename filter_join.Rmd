@@ -1,0 +1,98 @@
+---
+title: "filter_join"
+author: "Dave Parkin"
+date: "13/06/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+library(here)
+library(kableExtra)
+```
+
+```{r read in files}
+fish <- read_csv(here("data", "fish.csv"))
+kelp_abur <- read_excel(here("data", "kelp.xlsx"), sheet = "abur")
+```
+
+```{r examine Fish DF previously read in}
+names(fish)
+summary(fish)
+head(fish)
+tail(fish)
+```
+
+```{r examine Kelp_abur DF previously read in}
+names(kelp_abur)
+summary(kelp_abur)
+head(kelp_abur)
+tail(kelp_abur)
+```
+
+```{r filter}
+fish_garibaldi <- fish %>%
+  filter(common_name == "garibaldi")
+```
+
+```{r filter activity 8.3.1.1}
+fish_mohk <- fish %>%
+  filter(site == "mohk")
+```
+
+```{r more than 50 fish}
+fish_over50 <- fish %>%
+  filter(total_count >= 50)
+```
+
+``` {r OR filtering activity 8.3.3.1}
+fish_gar_2016 <- fish %>%
+  filter(year == 2016 |
+           common_name == "garibaldi")
+```
+
+```{r AND filtering}
+aque_2018 <- fish %>%
+  filter(year == 2018 & site == "aque")
+
+aque_2018
+```
+
+```{r AND filtering with sequential steps}
+aque_2018 <- fish %>%
+  filter(year == "2018") %>%
+  filter(site == "aque")
+
+aque_2018
+```
+
+```{r AND OR filtering activity 8.3.5}
+low_gb_wr <- fish %>%
+  filter(common_name %in% c("garibaldi", "rock wrasse")) %>%
+  filter(total_count <= 10)
+
+low_gb_wr
+```
+
+```{r filter string pattern}
+fish_bl <- fish %>%
+  filter(str_detect(common_name, pattern = "black"))
+
+fish_bl
+```
+
+```{r str pattern activity 8.3.7}
+fish_it <- fish %>%
+  filter(str_detect(common_name, pattern = "it"))
+
+fish_it
+```
+
+```{r str pattern activity 8.3.7 with NEGATE}
+fish_it_Negate <- fish %>%
+  filter(str_detect(common_name, pattern = "it", negate = TRUE))
+
+fish_it_Negate
+```
