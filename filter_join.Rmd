@@ -96,3 +96,49 @@ fish_it_Negate <- fish %>%
 
 fish_it_Negate
 ```
+
+```{r join FULL}
+abur_kelp_fish <- kelp_abur %>%
+  full_join(fish, by = c("year", "site"))
+
+abur_kelp_fish
+```
+
+
+```{r join LEFT}
+kelp_fish_left <- kelp_abur %>%
+  left_join(fish, by = c("year", "site"))
+
+kelp_fish_left
+```
+
+```{r inner join}
+kelp_fish_injoin <- kelp_abur %>%
+  inner_join(fish, by = c("year", "site"))
+
+kelp_fish_injoin
+```
+
+###PUTTING THINGS TOGETHER EXAMPLE
+
+#8.4.4 filter() and join() in a sequence
+
+Now let’s combine what we’ve learned about piping, filtering and joining!
+
+Let’s complete the following as part of a single sequence (remember, check to see what you’ve produced after each step) to create a new data frame called my_fish_join:
+
+-Start with fish data frame
+-Filter fish to only including observations for 2017 at Arroyo Burro
+-Join the kelp_abur data frame to the resulting subset using left_join()
+-Add a new column that contains the ‘fish per kelp fronds’ density (total_count / total_fronds)
+
+That sequence might look like this:
+
+```{r 8.4.4 activity}
+my_fish_join <- fish %>%
+  filter(year == 2017, site == "abur")
+  left_join(kelp_abur, by = c("year", "site")) %>%
+    mutate(fish_per_frond = total_count / total_fronds)
+  
+my_fish_join
+```
