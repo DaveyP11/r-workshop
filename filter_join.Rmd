@@ -35,22 +35,30 @@ tail(kelp_abur)
 ```{r filter}
 fish_garibaldi <- fish %>%
   filter(common_name == "garibaldi")
+
+fish_garibaldi
 ```
 
 ```{r filter activity 8.3.1.1}
 fish_mohk <- fish %>%
   filter(site == "mohk")
+
+fish_mohk
 ```
 
 ```{r more than 50 fish}
 fish_over50 <- fish %>%
   filter(total_count >= 50)
+
+fish_over50
 ```
 
 ``` {r OR filtering activity 8.3.3.1}
 fish_gar_2016 <- fish %>%
   filter(year == 2016 |
            common_name == "garibaldi")
+
+fish_gar_2016
 ```
 
 ```{r AND filtering}
@@ -90,7 +98,7 @@ fish_it <- fish %>%
 fish_it
 ```
 
-```{r str pattern activity 8.3.7 with NEGATE}
+```{r str pattern activity 8.3.7 with NEGATE, could be called an anti_filter}
 fish_it_Negate <- fish %>%
   filter(str_detect(common_name, pattern = "it", negate = TRUE))
 
@@ -135,10 +143,40 @@ Let’s complete the following as part of a single sequence (remember, check to 
 That sequence might look like this:
 
 ```{r 8.4.4 activity}
-my_fish_join <- fish %>%
-  filter(year == 2017, site == "abur")
-  left_join(kelp_abur, by = c("year", "site")) %>%
-    mutate(fish_per_frond = total_count / total_fronds)
+my_fish_joinA <- fish %>%
+  filter(year == 2017 & site == "abur")
+
+my_fish_joinA
+
+my_fish_joinB <- my_fish_joinA %>%
+  left_join(kelp_abur, by = c("year", "site"))
   
+my_fish_joinB
+
+my_fish_joinC <- my_fish_joinB %>%
+  mutate(fish_per_fronds = total_count/total_fronds)
+
+my_fish_joinC
+```
+
+```{r 8.4.4 suggested answer}
+my_fish_join <- fish %>% 
+  filter(year == 2017, site == "abur") %>% 
+  left_join(kelp_abur, by = c("year", "site")) %>% 
+  mutate(fish_per_frond = total_count / total_fronds)
+
 my_fish_join
 ```
+
+```{r HTML table with kable}
+
+library(janitor)
+my_fish_joinD <- my_fish_joinC %>%
+  clean_names("upper_camel") %>%
+  kable() %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = FALSE)
+
+my_fish_joinD
+```
+
